@@ -74,7 +74,7 @@ class AddJsTestCase(unittest.TestCase):
 
         self.assertIn('/Names', self.pdf_file_writer._root_object, "addJS should add a name catalog in the root object.")
         self.assertIn('/JavaScript', self.pdf_file_writer._root_object['/Names'], "addJS should add a JavaScript name tree under the name catalog.")
-        self.assertIn('/OpenAction', self.pdf_file_writer._root_object, "addJS should add an OpenAction to the catalog.")
+        self.assertIn('/JavaScript', self.pdf_file_writer._root_object, "addJS should add an JavaScript to the catalog.")
 
     def test_overwrite(self):
 
