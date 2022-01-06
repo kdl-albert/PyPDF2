@@ -483,7 +483,8 @@ class NameObject(str, PdfObject):
             ignore_eof=True)
         if debug: print(name)
         try:
-            return NameObject(name.decode('utf-8'))
+            encoding = utils.detectEncoding(name)
+            return NameObject(name.decode(encoding))
         except (UnicodeEncodeError, UnicodeDecodeError) as e:
             # Name objects should represent irregular characters
             # with a '#' followed by the symbol's hex number

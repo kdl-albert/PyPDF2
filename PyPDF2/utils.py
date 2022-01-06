@@ -140,6 +140,19 @@ def readUntilRegex(stream, regex, ignore_eof=False):
         name += tok
     return name
 
+def detectEncoding(s, default='latin-1'):
+    encodings = ('utf-8', 'cp932', 'euc_jp', 'ascii')
+    is_detect = False
+    is_bytes = isinstance(s, bytes)
+
+    for encoding in encodings:
+        try:
+            s.decode(encoding) if is_bytes == True else s.encode(encoding)
+            is_detect = True
+            break
+        except UnicodeDecodeError:
+            pass
+    return encoding if is_detect == True else default
 
 class ConvertFunctionsToVirtualList(object):
     def __init__(self, lengthFunction, getFunction):
@@ -235,7 +248,8 @@ else:
         if type(s) == bytes:
             return s
         else:
-            r = s.encode('latin-1')
+            encoding = detectEncoding(s)
+            r = s.encode(encoding)
             if len(s) < 2:
                 bc[s] = r
             return r
